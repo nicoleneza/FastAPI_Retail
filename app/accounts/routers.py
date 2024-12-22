@@ -12,3 +12,7 @@ def register_user(user:UserCreate,db:Session = Depends(get_db)):
     if db.query(User).filter(User.email == user.email).first():
         raise HTTPException(status_code=400,detail='Email or password already exists')
     return create_user(user,db)
+
+@router.post("/all",response_model=ProductRead)
+def retrieve_products(product_list:ProductRead, db:Session = Depends(get_db)):
+    return retrieve_product

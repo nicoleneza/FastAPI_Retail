@@ -33,3 +33,17 @@ class CategoryResponse(Base):
     name: str
     class Config:
         orm_mode = True
+        
+class ProductRead(Base):
+    id: int
+    name: str
+    category_id: int
+    sku:int
+    description: str
+    price: float
+    stock_quantity: float
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+    class Config:
+        orm_mode = True
+    

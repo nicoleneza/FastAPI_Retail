@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.inventory.models import Product,Category
-from app.inventory.schemas import ProductCreate,CategoryCreate
+from app.inventory.schemas import ProductCreate,CategoryCreate,ProductRead
 from fastapi import HTTPException
 
 def create_category(category: CategoryCreate, db:Session):
@@ -30,3 +30,7 @@ def create_product(product: ProductCreate, db:Session):
     db.commit()
     db.refresh(db_product)
     return db_product
+
+def retrieve_product(db:Session):
+    product_list = db.query(Product).all()
+    return [ProductRead.from_orm(product) for product in product_list]

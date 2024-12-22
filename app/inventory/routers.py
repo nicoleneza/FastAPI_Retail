@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from app.inventory.schemas import ProductCreate, ProductResponse,CategoryCreate,CategoryResponse
-from app.inventory.services import create_product, create_category
+from app.inventory.schemas import ProductCreate, ProductResponse,CategoryCreate,CategoryResponse,ProductRead
+from app.inventory.services import create_product, create_category,retrieve_product
 from database import get_db
 
 router = APIRouter()
@@ -13,3 +13,7 @@ def create_product_endpoint(product: ProductCreate, db: Session = Depends(get_db
 @router.post("/categories", response_model=CategoryResponse)
 def create_category_endpoint(category: CategoryCreate, db: Session = Depends(get_db)):
     return create_category(category, db)
+
+@router.post("/all",response_model=ProductRead)
+def retrieve_products(product_list:ProductRead, db:Session = Depends(get_db)):
+    return retrieve_product
